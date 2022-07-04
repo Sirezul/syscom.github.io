@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sollwertsteller berechnen</title>
+</head>
+<style>
+    *{
+        font-family: Arial, Helvetica, sans-serif;
+        color: white;
+    }
+
+    body {
+        margin: 2em;
+        background-color: #16365d;
+    }
+
+    form {
+        width: 25em;
+        margin-top: 2em;
+        
+    }
+
+    form label, h2, input{
+        color: black;
+    }
+
+    input {
+        margin: 0 0 1.5em .5em;
+    }
+
+    label {
+        float: left;
+        text-align: right;
+        width: 10em;
+    }
+
+    .button {
+        margin-top: 3em;
+    }
+
+    .form{
+        color: black;
+        background-color: grey;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+
+    form{
+        display: flex;
+        flex-direction: column;
+    }
+</style>
+<script>
+    function calcScale(){
+        var scaleMIN    = document.getElementById("scaleMIN").value;
+        var scaleMAX    = document.getElementById("scaleMAX").value;
+        var rscaleMIN   = document.getElementById("realscaleMIN").value;
+        var rscaleMAX   = document.getElementById("realscaleMAX").value;
+        var SWSTstart   = document.getElementById("SWSTstart").value;
+        var SWSTend     = document.getElementById("SWSTend").value;
+
+        console.log(scaleMIN);
+
+        var widerstand1 = (2000*(rscaleMIN-scaleMIN)/(rscaleMAX-scaleMIN));
+        var widerstand2 = (2000*(rscaleMAX-scaleMIN)/(scaleMAX-scaleMIN));
+
+        var a = (SWSTend-SWSTstart)/(widerstand2+widerstand1);
+        var b = SWSTend-((SWSTend-SWSTstart)/(widerstand2+widerstand1))*widerstand2
+
+        var calcMIN = b;
+        var calcMAX = a*2000+calcMIN;
+
+        document.getElementById("ergebnis").innerHTML = "Neue Skalierung:";
+        document.getElementById("min").innerHTML = calcMIN;
+        document.getElementById("max").innerHTML = calcMAX;
+        document.getElementById("w1").innerHTML = "Widerstand 1:  " + widerstand1 + "Ω";
+        document.getElementById("w2").innerHTML = "Widerstand 2:  " + widerstand2 + "Ω";
+    }
+</script>
+
+<body>
+
+<h1>Berechnung der Sollwertsteller-Skalierung</h1>
+
+<div class="form">
+<form>
+    <h2>Aktuelle Skalierung</h2>
+    <div>
+	    <label for="scaleMIN" >Scale-Min: </label>
+	    <input type="number" id="scaleMIN" name="Scale-Min" value=-3>
+	</div>
+    <div>
+	    <label for="scaleMAX">Scale-Max: </label>
+	    <input type="number" id="scaleMAX" name="Scale-Max" value=9>
+    </div>
+    <hr>
+    <h2>Tatsächlicher Wert</h2>
+    <div>
+	    <label for="realscaleMIN" >Scale-Min: </label>
+	    <input type="number" id="realscaleMIN" name="Scale-Min" >
+	</div>
+    <div>
+	    <label for="realscaleMAX">Scale-Max: </label>
+	    <input type="number" id="realscaleMAX" name="Scale-Max" >
+    </div>
+    <h2>Sollwertsteller</h2>
+    <div>
+	    <label for="SWSTstart" >Startpunkt: </label>
+	    <input type="number" id="SWSTstart" name="Sollwertsteller Start" value="-3">
+	</div>
+    <div>
+	    <label for="SWSTend">Endpunkt: </label>
+	    <input type="number" id="SWSTend" name="Sollwertsteller Ende" value="3">
+    </div>
+	<input type="button" onClick="calcScale()" value="Berechnen" />
+</form>
+
+</div>
+
+<!-- Ergebnisanzeige -->
+<p id="ergebnis"></p>
+<p id="min"></p>
+<p id="max"></p>
+<p id="w1"></p>
+<p id="w2"></p>
+
+
+</body>
+</html>
