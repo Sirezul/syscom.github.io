@@ -1,59 +1,12 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sollwertsteller berechnen</title>
+    <link href="./dist/output.css" rel="stylesheet">
+    <title>Sollwertsteller berechnen - SysCom Helper</title>
 </head>
-<style>
-    *{
-        font-family: Arial, Helvetica, sans-serif;
-        color: white;
-    }
-
-    body {
-        margin: 2em;
-        background-color: #16365d;
-    }
-
-    form {
-        width: 25em;
-        margin-top: 2em;
-        
-    }
-
-    form label, h2, input{
-        color: black;
-    }
-
-    input {
-        margin: 0 0 1.5em .5em;
-    }
-
-    label {
-        float: left;
-        text-align: right;
-        width: 10em;
-    }
-
-    .button {
-        margin-top: 3em;
-    }
-
-    .form{
-        color: black;
-        background-color: grey;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-    }
-
-    form{
-        display: flex;
-        flex-direction: column;
-    }
-</style>
 <script>
     function calcScale(){
         var scaleMIN    = document.getElementById("scaleMIN").value;
@@ -71,63 +24,103 @@
         var a = (SWSTend-SWSTstart)/(widerstand2+widerstand1);
         var b = SWSTend-((SWSTend-SWSTstart)/(widerstand2+widerstand1))*widerstand2
 
-        var calcMIN = b;
-        var calcMAX = a*2000+calcMIN;
+        var calcMIN = b.toFixed(2);
+        var calcMAX = (parseFloat(a)*2000 + parseFloat(calcMIN)).toFixed(2);
 
-        document.getElementById("ergebnis").innerHTML = "Neue Skalierung:";
-        document.getElementById("min").innerHTML = calcMIN;
-        document.getElementById("max").innerHTML = calcMAX;
+  
+
+
+        document.getElementById("min").innerHTML = "Scale-Min: " + calcMIN;
+        document.getElementById("max").innerHTML = "Scale-Max: " + calcMAX;
         document.getElementById("w1").innerHTML = "Widerstand 1:  " + widerstand1 + "Ω";
         document.getElementById("w2").innerHTML = "Widerstand 2:  " + widerstand2 + "Ω";
     }
 </script>
 
-<body>
+<body class="bg-slate-100">
 
-<h1>Berechnung der Sollwertsteller-Skalierung</h1>
 
-<div class="form">
-<form>
-    <h2>Aktuelle Skalierung</h2>
-    <div>
+<nav class="flex items-center rounded-b-lg justify-between flex-wrap bg-blue-900 p-6 shadow-md">
+    <div class="flex items-center flex-no-shrink text-white mr-6">
+        <span class="font-sans text-xl tracking-tight text-white">SysComHelper</span>
+    </div>
+    <div class="block lg:hidden">
+        <button class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white">
+        <svg class="h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+        </button>
+    </div>
+    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+        <div class="text-sm lg:flex-grow"><!--
+        <a href="#" class="block mt-4 lg:inline-block lg:mt-0 text-blue-100 hover:text-gray-400 mr-4">
+            Sollwerte berechnen
+        </a>-->
+        </div>
+    </div>
+</nav>
+
+
+
+<h1 class="h1 text-3xl p-10 text-black flex drop-shadow-md">Berechnung der Sollwertsteller-Skalierung</h1>
+<div class="flex flex-grow mt-10">
+<div class="form w-full align-items flex justify-center">
+<form class="bg-white shadow-md  justify-center md:w-[36rem] mx-10 w-full rounded-lg px-12 py-8 flex flex-col rounded-lg bg-gray-300">
+    <h2 class="text-2xl">Aktuelle Skalierung</h2>
+    <div class="grid grid-cols-2 h-auto my-4">
 	    <label for="scaleMIN" >Scale-Min: </label>
-	    <input type="number" id="scaleMIN" name="Scale-Min" value=-3>
-	</div>
-    <div>
+	    <input class="text-center rounded-lg " type="number" id="scaleMIN" name="Scale-Min" value=-3>
+    </div>
+    <div class="grid grid-cols-2 h-auto mb-4">
 	    <label for="scaleMAX">Scale-Max: </label>
-	    <input type="number" id="scaleMAX" name="Scale-Max" value=9>
+	    <input class="text-center rounded-lg" type="number" id="scaleMAX" name="Scale-Max" value=9>
     </div>
     <hr>
-    <h2>Sollwertsteller</h2>
-    <div>
+    <h2 class="text-2xl mt-4">Tatsächlicher Wert</h2>
+    <div class="grid grid-cols-2 h-auto my-4">
+	    <label for="realscaleMIN" >Startpunkt: </label>
+	    <input class="text-center rounded-lg" type="number" id="realscaleMIN" name="Scale-Min" >
+	</div>
+    <div class="grid grid-cols-2 h-auto mb-4">
+	    <label for="realscaleMAX">Endpunkt: </label>
+	    <input class="text-center rounded-lg" type="number" id="realscaleMAX" name="Scale-Max" >
+    </div>
+    <hr>
+    <h2 class="text-2xl mt-4">Sollwertsteller</h2>
+    <div class="grid grid-cols-2 h-auto my-4">
 	    <label for="SWSTstart" >Startpunkt: </label>
-	    <input type="number" id="SWSTstart" name="Sollwertsteller Start" value="-3">
+	    <input class="text-center rounded-lg" type="number" id="SWSTstart" name="Sollwertsteller Start" value="-3">
 	</div>
-    <div>
+    <div class="grid grid-cols-2 h-auto mb-4">
 	    <label for="SWSTend">Endpunkt: </label>
-	    <input type="number" id="SWSTend" name="Sollwertsteller Ende" value="3">
+	    <input class="text-center rounded-lg" type="number" id="SWSTend" name="Sollwertsteller Ende" value="3">
     </div>
-    <h2>Tatsächlicher Wert</h2>
-    <div>
-	    <label for="realscaleMIN" >Scale-Min: </label>
-	    <input type="number" id="realscaleMIN" name="Scale-Min" >
-	</div>
-    <div>
-	    <label for="realscaleMAX">Scale-Max: </label>
-	    <input type="number" id="realscaleMAX" name="Scale-Max" >
-    </div>
-	<input type="button" onClick="calcScale()" value="Berechnen" />
+	<input type="button" class="cursor-pointer mt-4 text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick="calcScale()" value="Berechnen" />
 </form>
-
+</div>
+</div>
+<!-- Ergebnisanzeige -->
+<div class="flex w-full justify-center pt-12 px-10">   
+    <div class="justify-center text-xl">
+        <p id="min"></p>
+        <p id="max"></p>
+        <p id="w1"></p>
+        <p id="w2"></p>
+    </div>
 </div>
 
-<!-- Ergebnisanzeige -->
-<p id="ergebnis"></p>
-<p id="min"></p>
-<p id="max"></p>
-<p id="w1"></p>
-<p id="w2"></p>
-
-
+<footer class="fixed w-full bottom-0 shadow-md p-4 bg-white rounded-t-lg shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800">
+    <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a href="https://www.syscom-gmbh.de/" class="hover:underline">SysCom Automationstechnik GmbH</a>.
+    </span>
+    <ul class="flex flex-wrap items-center mt-3 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
+        <li>
+            <a href="https://www.syscom-gmbh.de/impressum/datenschutzbestimmungen/" class="mr-4 hover:underline md:mr-6">Datenschutz</a>
+        </li>
+        <li>
+            <a href="https://www.syscom-gmbh.de/impressum/" class="mr-4 hover:underline md:mr-6">Impressum</a>
+        </li>
+        <li>
+            <a href="https://www.syscom-gmbh.de/kontakt/" class="hover:underline">Kontakt</a>
+        </li>
+    </ul>
+</footer>
 </body>
 </html>
