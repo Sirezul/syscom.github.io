@@ -18,17 +18,22 @@
 
         console.log(scaleMIN);
 
-        var widerstand1 = (2000*(rscaleMIN-scaleMIN)/(rscaleMAX-scaleMIN));
+        var widerstand1 = (2000*(rscaleMIN-scaleMIN)/(scaleMAX-scaleMIN));
         var widerstand2 = (2000*(rscaleMAX-scaleMIN)/(scaleMAX-scaleMIN));
 
-        var a = (SWSTend-SWSTstart)/(widerstand2+widerstand1);
-        var b = SWSTend-((SWSTend-SWSTstart)/(widerstand2+widerstand1))*widerstand2
+        //var a = (SWSTend-SWSTstart)/(widerstand2+widerstand1);
+        //var b = SWSTend-((SWSTend-SWSTstart)/(widerstand2+widerstand1))*widerstand2
 
-        var calcMIN = b.toFixed(2);
-        var calcMAX = (parseFloat(a)*2000 + parseFloat(calcMIN)).toFixed(2);
+        //var calcMIN = b.toFixed(2);
+        //var calcMAX = (parseFloat(a)*2000 + parseFloat(calcMIN)).toFixed(2);
 
-  
+        var calcMIN = parseFloat(SWSTstart-(((SWSTend-SWSTstart)*widerstand1)/(widerstand2-widerstand1))).toFixed(2)
+        var calcMAX = (parseFloat((((SWSTend-SWSTstart)*(2000-widerstand1))/(widerstand2-widerstand1)))+parseFloat(SWSTstart)).toFixed(2)
 
+
+        //Vor Anzeige runden
+        widerstand1 = widerstand1.toFixed(2)
+        widerstand2 = widerstand2.toFixed(2)
 
         document.getElementById("min").innerHTML = "Scale-Min: " + calcMIN;
         document.getElementById("max").innerHTML = "Scale-Max: " + calcMAX;
